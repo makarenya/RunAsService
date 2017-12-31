@@ -1,0 +1,35 @@
+<project name="Service" default="Compile">
+
+	<target name="Compile" depends="ResGen,CopyRefs">
+		<echo message="Compiling sources" level="Info"/>
+		<csc target="winexe" output="${output.dir}/RunAsService.exe" debug="${compile.debug}" define="${compile.define}">
+			<arg value="/unsafe-" />
+			<arg value="/checked-" />
+			<sources>
+				<includes name="*.cs" />
+			</sources>
+			<references>
+				<includes name="${ms.net.framework.dir}/System.dll" />
+				<includes name="${ms.net.framework.dir}/System.Data.dll" />
+				<includes name="${ms.net.framework.dir}/System.ServiceProcess.dll" />
+				<includes name="${ms.net.framework.dir}/System.XML.dll" />
+				<includes name="${ms.net.framework.dir}/System.Management.dll" />
+				<includes name="${ms.net.framework.dir}/System.Configuration.Install.dll" />
+				<includes name="${output.dir}\log4net.dll" />
+			</references>
+			<arg value="/resource:${output.dir}\RunAsService.ProjectInstaller.resources" />
+			<arg value="/resource:${output.dir}\RunAsService.RunAsService.resources" />
+		</csc>
+	</target>
+
+	<target name="ResGen">
+		<echo message="Generate resources" level="Info"/>
+		<resgen input="ProjectInstaller.resx" output="${output.dir}\RunAsService.ProjectInstaller.resources" />
+		<resgen input="RunAsService.resx" output="${output.dir}\RunAsService.RunAsService.resources" />
+	</target>
+	
+	<target name="CopyRefs">
+		<copy file="${log4net.lib}" todir="${output.dir}"/>
+	</target>
+
+</project>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/*
+ * JavaDemo, demonstrates the use of RunAsService, the service to run non-
+ * service applications as a service, using a Java application
+ *
+ * Distributable under Academic Free License Version 1.2
+ * See http://www.opensource.org/licenses/academic.php
+ */
+ -->
+
+
+<project>
+  <!-- the version of maven's project object model -->
+
+  <pomVersion>3</pomVersion>
+  <!-- a unique name for this project -->
+
+  <id>JavaDemo</id>
+  <!-- a short but descriptive name for the project -->
+
+  <name>JavaDemo</name>
+  <!-- The version of the project under development, e.g.
+       1.1, 1.2, 2.0-SNAPSHOT -->
+
+  <currentVersion>1.0</currentVersion>
+  <!-- details about the organization that 'owns' the project -->
+
+  <organization>
+    <name>DulSoft</name>
+    <url>http://sourceforge.net/projects/runasservice</url>
+    <logo>http://sourceforge.net/sflogo.php?group_id=106617&amp;amp;type=5</logo>
+  </organization>
+  <!-- the year the project started -->
+
+  <inceptionYear>2004</inceptionYear>
+  <package>nl.dulsoft.console.runasservice.java.demo</package>
+  <logo>http://sourceforge.net/sflogo.php?group_id=106617&amp;amp;type=5</logo>
+  <description>A demo showing how RunAsService can be used to run a java application</description>
+  <!-- a short description of what the project does -->
+
+  <shortDescription>A demo showing how RunAsService can be used to run a java application</shortDescription>
+  <!-- the project home page -->
+
+  <url>http://sourceforge.net/projects/runasservice</url>
+
+  <!-- who the developers are for the project -->
+
+  <developers>
+    <developer>
+      <name>Marcel Dullaart</name>
+      <id>tumblindice</id>
+      <email>tumblindice@sourceforge.net</email>
+    </developer>
+  </developers>
+  <!-- jar files the project is dependent on -->
+
+  <dependencies>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.8</version>
+    </dependency>
+  </dependencies>
+  <!-- build information for the project -->
+
+  <licenses>
+    <license>
+      <name>Academic Free License Version 1.2</name>
+      <url>http://www.opensource.org/licenses/academic.php</url>
+    </license>
+  </licenses>
+  
+  <build>
+    <nagEmailAddress>tumblindice@sourceforge.net</nagEmailAddress>
+    <sourceDirectory>src</sourceDirectory>
+
+  </build>
+</project>

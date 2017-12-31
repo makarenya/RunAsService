@@ -1,0 +1,46 @@
+<project name="RunAsService" default="Build">
+
+	<property name="project.base" value="${nant.project.basedir}"/>
+	<property name="project.output" value="${project.base}/build"/>
+	<property name="project.debug" value="${project.output}/debug"/>
+	<property name="project.release" value="${project.output}/release"/>
+	<property name="ms.net.framework.dir" value="C:/WINDOWS/Microsoft.NET/Framework/v1.1.4322"/>
+	<property name="log4net.lib" value="c:/bin/DotNetTools/log4net-1.2.0-beta8/log4net-1.2.0-beta8/bin/net/1.1/release/log4net.dll"/>
+	<property name="compile.args" value="/unsafe- /checked-"/>
+	
+	<target name="Init">
+		<mkdir dir="${project.output}"/>
+		<mkdir dir="${project.debug}"/>
+		<mkdir dir="${project.release}"/>
+	</target>
+
+	<target name="Build" depends="Clean,Installer"/>
+	
+	<target name="Compile" depends="Init">
+		<nant buildfile="${project.base}/RunAsService/Service.build" target="Compile">
+			<properties>
+				<property name="output.dir" value="${project.debug}"/>
+				<property name="compile.debug" value="true"/>
+				<property name="compile.define" value="TRACE,DEBUG"/>
+			</properties>
+		</nant>
+
+		<nant buildfile="${project.base}/RunAsService/Service.build" target="Compile">
+			<properties>
+				<property name="output.dir" value="${project.release}"/>
+				<property name="compile.debug" value="false"/>
+				<property name="compile.define" value="TRACE"/>
+			</properties>
+		</nant>
+	</target>
+	
+	<target name="Installer" depends="Compile">
+		<nant buildfile="${project.base}/SetupRunAsService/Setup.build" target="Installer">
+		</nant>
+	</target>
+	
+	<target name="Clean">
+		<delete dir="${project.output}" failonerror="false" />
+	</target>
+</project>
+

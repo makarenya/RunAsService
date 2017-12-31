@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RunAsService</name>
+    </assembly>
+    <members>
+        <member name="T:RunAsService.ConfigSectionHandler">
+            <summary>
+            Processes the config section in the application.config file.
+            </summary>
+        </member>
+        <member name="M:RunAsService.ConfigSectionHandler.Create(System.Object,System.Object,System.Xml.XmlNode)">
+            <summary>
+            Processes one single custom section in the application configuration file.
+            </summary>
+            <param name="parent"></param>
+            <param name="context"></param>
+            <param name="section">The section in XmlNode format</param>
+            <returns>The resulting configuration object</returns>
+        </member>
+        <member name="T:RunAsService.RunAsService">
+            <summary>
+            Main class for running multiple applications as a windows service.
+            </summary>
+        </member>
+        <member name="F:RunAsService.RunAsService.Log">
+            <summary>
+            class level Log4Net logger
+            </summary>
+        </member>
+        <member name="F:RunAsService.RunAsService._components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:RunAsService.RunAsService.Main">
+            <summary>
+            Creates an array of services to run, and runs each service in the array.
+            </summary>
+        </member>
+        <member name="M:RunAsService.RunAsService.#ctor(RunAsService.Service)">
+            <summary>
+            Construct the event log if it does not exist
+            </summary>
+            <param name="aService">
+            Properties of the application that is run as a service.
+            </param>
+        </member>
+        <member name="M:RunAsService.RunAsService.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:RunAsService.RunAsService.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:RunAsService.RunAsService.OnStart(System.String[])">
+            <summary>
+            Starts the application that needs to be run as service.
+            </summary>
+        </member>
+        <member name="M:RunAsService.RunAsService.OnStop">
+            <summary>
+            Stop this service.
+            </summary>
+        </member>
+        <member name="T:RunAsService.ScriptedInstaller">
+            <summary>
+            This is a custom service installer.
+            Makes it possible to install the service using the .Net SDK supplied 
+            installutil application.
+            </summary>
+        </member>
+        <member name="M:RunAsService.ScriptedInstaller.#ctor">
+            <summary>
+            Initializes the installer
+            </summary>
+        </member>
+        <member name="M:RunAsService.ScriptedInstaller.GetContextParameter(System.String)">
+            <summary>
+            Returns the value of th eparameter indicated by key.
+            </summary>
+            <param name="key">Context parameter key</param>
+            <returns>Context parameter specified by key</returns>
+        </member>
+        <member name="M:RunAsService.ScriptedInstaller.OnBeforeInstall(System.Collections.IDictionary)">
+            <summary>
+            This method is run before the install process.
+            It is overriden to set the following parameters:
+            - service name taken from the /name switch
+            - account type, taken frm the /account switch
+            - user name, for a user account, taken from the /user switch
+            - password, for a user account, taken from the /password switch
+            
+            If the account type is set to user, but the user name and/or 
+            password are not set, the user is prompted for the credentials 
+            to use.
+            </summary>
+            <param name="savedState"></param>
+        </member>
+        <member name="M:RunAsService.ScriptedInstaller.Install(System.Collections.IDictionary)">
+            <summary>
+            Modify the registry to install the new service.
+            </summary>
+            <param name="stateServer"></param>
+        </member>
+        <member name="M:RunAsService.ScriptedInstaller.OnBeforeUninstall(System.Collections.IDictionary)">
+            <summary>
+            Uninstall based on the services name.
+            </summary>
+            <param name="stateServer"></param>
+        </member>
+        <member name="M:RunAsService.ScriptedInstaller.Uninstall(System.Collections.IDictionary)">
+            <summary>
+            
+            </summary>
+            <param name="stateServer"></param>
+        </member>
+        <member name="T:RunAsService.Service">
+            <summary>
+            Describes the properties of an application that needs to be run as a service.
+            </summary>
+        </member>
+        <member name="M:RunAsService.Service.#ctor(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Constructs a Service object.
+            </summary>
+            <param name="aName">Descriptive name of the service</param>
+            <param name="anExecutable">Fullpath to the executable that is run as service</param>
+            <param name="aParamList">List of commandline parameters</param>
+            <param name="stdoutName">Name of stdout redirection file (or null for no redirection)</param>
+            <param name="stderrName">Name of stderr redirection file (or null for no redirection)</param>
+            <param name="home">Home directory</param>
+        </member>
+        <member name="M:RunAsService.Service.Start">
+            <summary>
+            Starts the service without a window.
+            </summary>
+        </member>
+        <member name="M:RunAsService.Service.Stop">
+            <summary>
+            Stops the service and destroy's the associated process.
+            If the process exists its kill method is called to end the process.
+            </summary>
+        </member>
+        <member name="M:RunAsService.Service.ToString">
+            <summary>
+            Constructs a concatenation of the properties of the service.
+            </summary>
+            <returns>The string concationation of the service's properties</returns>
+        </member>
+        <member name="T:RunAsService.ServicesConfig">
+            <summary>
+            Contains the configuration information of each application that needs to 
+            be run as service.
+            </summary>
+        </member>
+        <member name="M:RunAsService.ServicesConfig.GetConfig">
+            <summary>
+            Retrieves the configuration settings as described in the application 
+            configuration file.
+            </summary>
+            <returns>The configuration settings</returns>
+        </member>
+        <member name="M:RunAsService.ServicesConfig.GetEnumerator">
+            <summary>
+            Returns an enumerator capable of enumrating over the configuration settings
+            </summary>
+            <returns>The enumerator as supplied by the serives List.</returns>
+        </member>
+        <member name="P:RunAsService.ServicesConfig.Count">
+            <summary>
+            Get's the total number of services in the configuration.
+            </summary>
+        </member>
+    </members>
+</doc>

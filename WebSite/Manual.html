@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>RunAsService Installation and Configuration guide</title>
+	</head>
+	<body>
+		<table width="100%">
+			<tr>
+				<td width="100px" valign="top">
+					<A href="http://sourceforge.net">
+						<IMG src="http://sourceforge.net/sflogo.php?group_id=106617&amp;amp;type=5" border="0" alt="SourceForge.net Logo">
+					</A>
+				</td>
+				<td>
+					<h3>Installation and Configuration guide</h3>
+					<p>
+					</p>
+					<h4>Installation</h4>
+					<p>
+						To be able to deploy RunAsService, you need to have the MS.Net
+						framework version 1.1 installed.<br/>
+						If you do not have this, you can download a copy at
+						<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=262d25e3-f589-4842-8157-034d1e7cf3a3&displaylang=en"
+							target="new">MSDN</a>
+					</p>
+					<p>
+						Installation is very easy, its just a matter of extracting the zip file into
+						the desired location and running the Install.cmd file.
+					</p>
+					<p>
+						The Install.cmd batch file requires only 1 parameter, the account type the
+						service uses to run. This can be one of the following:
+						<ol>
+							<li>user<br>
+							An account defined by a specific user on the network.
+							Specifying User causes the system to prompt for a
+							valid user name and password when the service is installed.</li>
+
+							<li>localsystem<br>
+							An account that has a high privileged level.</li>
+
+							<li>localservice (only on WinXP and later)<br/>
+							An account that acts as a non-privileged user on the
+							local computer, and presents anonymous credentials
+							to any remote server.</li>
+
+							<li>networkservice (only on WinXP and later)<br/>
+							An account that provides extensive local privileges,
+							and presents the computer's credentials to any
+							remote server.</li>
+
+						</ol>
+					</p>
+					<p>
+						For instance to install RunAsService using a specific
+						user account, type at the command prompt:<br/>
+						<code>Install user</code><br/>
+						The following dialog is shown:<br/>
+						<div><img src="account.jpg"/></div>
+						<br/>
+						After entering a correct username and associated password
+						the installation finishes.
+					<p>
+
+					<h4>Configuring RunAsService</h4>
+					<P>
+						RunAsService is configured using the MS.Net application configuration file.<br />
+						This file, which you can find in teh installation directory, is named
+						RunAsService.exe.config.
+					</P>
+					<p>
+						The application configuration file is structured using XML format, and consists
+						of 3 section:
+					</p>
+					<ol>
+						<li>
+							<code>&lt;configSections&gt;</code><br />
+							Defines the next custom configuration sections.
+						</li>
+						<li>
+							<code>&lt;log4net&gt;</code><br />
+							Configures the log4net logging functionality. For more information about
+							configuring log4net, please look at the log4net site at <a href="http://logging.apache.org/log4net">
+								http://logging.apache.org/log4net</a></li>
+						<li>
+							<code>&lt;service.settings&gt;</code><br />
+							This is the most interesting section, it configures each application to be run
+							as service.<br />
+						</li>
+					</ol>
+					<p>
+						Generally the <code>&lt;service.settings&gt;</code> section looks like this:
+						<pre>
+	&lt;service.settings&gt;
+		&lt;!-- Run application 1 as service --&gt;
+		&lt;service&gt;
+			&lt;name&gt;Application 1&lt;/name&gt;
+			&lt;executable&gt;C:\Path-To\application-1.exe&lt;/executable&gt;
+			&lt;parameters&gt;Parameters for application 1&lt;/parameters&gt;
+		&lt;/service&gt;
+		...
+		&lt;!-- Run application n as service --&gt;
+		&lt;service&gt;
+			&lt;name&gt;Application n&lt;/name&gt;
+			&lt;executable&gt;C:\Path-To\application-n.exe&lt;/executable&gt;
+			&lt;parameters&gt;Parameters for application n&lt;/parameters&gt;
+		&lt;/service&gt;
+	&lt;/service.settings&gt;
+						</pre>
+					</p>
+					<p>
+						For every application that you want to run as a service, add a
+						<code>&lt;service&gt;</code>.<br>
+						The optional value of the <code>&lt;name&gt;</code> element
+						is arbitrary, you can add anything you like to describe the application.<br>
+						More important is the <code>&lt;executable&gt;</code> element.
+						This needs to be the full path to the executable and is mandatory.<br/>
+						The <code>&lt;parameters&gt;</code> element is optinal, you can add any parameters
+						that you would normally add to the commandline when starting the application.
+					</p>
+					<p>
+						Following is a sample configuration that contains 2 applications.
+						The SubVersion server component, the application that started all this,
+						and a java application.
+					</p>
+			<pre>
+	&lt;!-- Run Subversion server as service --&gt;
+	&lt;service&gt;
+		&lt;name&gt;SubVersion Server&lt;/name&gt;
+		&lt;executable&gt;C:\Program Files\Subversion\bin\svnserve.exe&lt;/executable&gt;
+		&lt;parameters&gt;-d -r c:\bin\svn\repository&lt;/parameters&gt;
+	&lt;/service&gt;
+			</pre>
+			<pre>
+	&lt;!-- Run a java program as service --&gt;
+	&lt;service&gt;
+		&lt;name&gt;Java Test Service&lt;/name&gt;
+		&lt;executable&gt;C:\j2sdk1.4.2_04\bin\java.exe&lt;/executable&gt;
+		&lt;parameters&gt;-cp c:\Java\test Test&lt;/parameters&gt;
+	&lt;/service&gt;
+			</pre>
+
+					<p>
+						Now that the configuration has completed, all that is left is starting the service.<br/>
+						To accomplish this, you'll need to open the control panel's services applet.<br/>
+						Select RunAsService in the list and click the start button.
+					</p>
+					<p>
+						Check the log4net logfile to see if any failure occured.<br/>
+						You can also check the Eventlog for errors, if the service could not be started.
+					</p>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
