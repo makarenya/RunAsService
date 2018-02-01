@@ -81,11 +81,11 @@ namespace RunAsService
             //
             _process.OutputDataReceived += (sender, args) =>
             {
-                _stdoutWriter.WriteLine(args.Data);
+                _stdoutWriter?.WriteLine(args.Data);
             };
             _process.ErrorDataReceived += (sender, args) =>
             {
-                _stderrWriter.WriteLine(args.Data);
+                _stderrWriter?.WriteLine(args.Data);
             };
 
             // Install an exit handler to let us know if the process exited wihtout us 

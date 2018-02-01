@@ -1,0 +1,6 @@
+.vs/
+packages/
+*.user
+RunAsService/bin/
+RunAsService/obj/
+WebSite/obj/

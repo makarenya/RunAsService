@@ -33,7 +33,7 @@
             Required designer variable.
             </summary>
         </member>
-        <member name="M:RunAsService.RunAsService.Main">
+        <member name="M:RunAsService.RunAsService.Main(System.String[])">
             <summary>
             Creates an array of services to run, and runs each service in the array.
             </summary>

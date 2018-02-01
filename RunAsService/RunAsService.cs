@@ -5,6 +5,7 @@
  * See http://www.opensource.org/licenses/academic.php
  */
 
+using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.ServiceProcess;
@@ -33,7 +34,7 @@ namespace RunAsService
         /// <summary>
         /// Creates an array of services to run, and runs each service in the array.
         /// </summary>
-        public static void Main()
+        public static void Main(string[] args)
 		{
             // Read logging config from default application config file.
             //
@@ -60,7 +61,22 @@ namespace RunAsService
 			var servicesToRun = new ServiceBase[config.Count];
 			var index = 0;
 
-			foreach (Service service in config)
+		    if (args.Length == 1 && args[0] == "run")
+		    {
+		        foreach (Service service in config)
+		        {
+		            service.Start();
+		        }
+                Console.WriteLine("Any key to stop...");
+		        Console.ReadKey();
+		        foreach (Service serivce in config)
+		        {
+		            serivce.Stop();
+		        }
+		        return;
+		    }
+
+            foreach (Service service in config)
 			{
 				servicesToRun[index] = new RunAsService(service);
 				++index;
